@@ -41,6 +41,7 @@ let person1 = {
 };
 
 let array = [2,3,5,8]
+array = [2,4,6,7]
 
 console.log(person1);
 console.log(array);
