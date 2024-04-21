@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
+const myFunction = require('./myFunction');
+
+
 
 app.get('/', function (req, res) {
-  res.send('My name is chiboy');
+  let callFunction = myFunction()
+  res.send(callFunction);
 });
 
 app.listen(3000, function() {
