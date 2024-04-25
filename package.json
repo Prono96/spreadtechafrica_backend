@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mongoose": "^8.3.2",
     "mysql": "^2.18.1"
   },
   "name": "spreadtech_backend",
