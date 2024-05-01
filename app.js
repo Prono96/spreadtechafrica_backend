@@ -4,6 +4,7 @@ const app = express();
 const myFunction = require('./myFunction');
 const conn = require('./database/connection');
 const User = require('./schema/users');
+const Student = require('./schema/students');
 conn
 
 // Parse JSON request body
@@ -22,6 +23,19 @@ app.post('/users/sign_up', async(req, res) => {
     const newUser = new User(userData);
     await newUser.save();
     res.status(201).json({ message: 'User added successfully', user: newUser });
+} catch (error) {
+    res.status(500).json({ message: 'Failed to add user', error: error.message });
+}
+})
+
+// CREATE STUDENT API
+app.post('/student/sign_up', async(req, res) => {
+  try {
+    const userData = req.body;
+
+    const newUser = new Student(userData);
+    await newUser.save();
+    res.status(201).json({ message: 'Student added successfully', user: newUser });
 } catch (error) {
     res.status(500).json({ message: 'Failed to add user', error: error.message });
 }
@@ -49,6 +63,25 @@ app.put('/users/:id', async (req, res) => {
 
   try {
     const updatedUser = await User.findByIdAndUpdate(id, userData, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update user', error: error.message });
+  }
+});
+
+
+// UPDATE STUDENT BY ID
+app.put('/student/:id', async (req, res) => {
+  const { id } = req.params;
+  const userData = req.body;
+
+  try {
+    const updatedUser = await Student.findByIdAndUpdate(id, userData, { new: true });
 
     if (!updatedUser) {
       return res.status(404).json({ message: 'User not found' });
